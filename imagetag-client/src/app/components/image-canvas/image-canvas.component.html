@@ -1,0 +1,26 @@
+<div class="image-container">
+  <img #imageTag id="imageTag" [src]="imageUrl" (load)="onImageLoaded()" (click)="onImageClicked($event)"/>
+  <ng-container *ngFor="let marker of image?.markers">
+    <div class="circle-marker" [ngStyle]="{
+        'width.px': marker.diameter,
+        'height.px': marker.diameter,
+        'left.px': marker.position.x,
+        'top.px': marker.position.y
+      }"
+      [ngClass]="{'highlighted' : marker.highlighted}">
+    </div>
+  </ng-container>
+</div>
+
+<div *ngIf="imageHasLoaded && image.markers" id="data">
+  <ion-list>
+    <ion-item *ngFor="let marker of image.markers | keyvalue: noSort"
+      (mouseenter)="listMarkerMouseEnter(marker.key)"
+      (mouseleave)="listMarkerMouseLeave(marker.key)">
+      <ion-label>
+        {{marker.key}}: {{marker.value.points | json}}
+      </ion-label>
+      <ion-icon (click)="deleteMarker(marker.key)" slot="end" icon="trash" color="primary"></ion-icon>
+    </ion-item>
+  </ion-list>
+</div>
