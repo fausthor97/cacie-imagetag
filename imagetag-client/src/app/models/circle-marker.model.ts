@@ -20,7 +20,6 @@ export class CircleMarker {
     }
 
     public translatePosition(currentWidth, currentHeight, newWidth, newHeight) {
-        console.log(currentWidth, currentHeight, newWidth, newHeight);
         this.points.a.x = (this.points.a.x * newWidth) / currentWidth;
         this.points.a.y = (this.points.a.y * newHeight) / currentHeight;
         this.points.b.x = (this.points.b.x * newWidth) / currentWidth;
@@ -36,7 +35,7 @@ export class CircleMarker {
     private calculateProperties() {
         this.radius = this.calculateRadius(this.points);
         this.diameter = this.radius*2;
-        this.position= this.calculatePosition(this.points.a, this.radius)
+        this.position = this.calculatePosition(this.points.a, this.radius)
     }
 
     private calculateRadius(points: { a: IPoint, b: IPoint }) {

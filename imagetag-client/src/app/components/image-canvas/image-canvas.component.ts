@@ -24,7 +24,6 @@ export class ImageCanvasComponent implements OnInit {
   ngOnInit() {
     this.image = new Image(this.imageUrl);
     this.buttonEvents.subscribe(event => {
-      console.log(event);
       if (event === 'zoomIn') {
         this.zoomIn();
       } else if (event === 'zoomOut') {
@@ -76,11 +75,11 @@ export class ImageCanvasComponent implements OnInit {
   }
 
   highlightMarker(key: string) {
-    this.image.markers[Number(key)].highlighted = true;
+    this.image.circleMarkers[Number(key)].highlighted = true;
   }
 
   removeMarkerHighlight(key: string) {
-    this.image.markers[Number(key)].highlighted = false;
+    this.image.circleMarkers[Number(key)].highlighted = false;
   }
 
   zoomIn() {

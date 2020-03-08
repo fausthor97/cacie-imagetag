@@ -14,9 +14,18 @@
   cursor: move;
 }
 
+.click-marker {
+  border-radius: 50%;
+  background-color: rgb(204,255,0);
+  position: absolute;
+  pointer-events: none;
+  width: 6px;
+  height: 6px;
+}
+
 .circle-marker {
   border-radius: 50%;
-  border: 1px solid  rgba(0, 140, 211, 0.51);
+  border: 1px solid rgb(204,255,0);
   background-color: rgba(0, 140, 211, 0.17);
   position: absolute;
   pointer-events: none;
@@ -24,5 +33,5 @@
 
 .highlighted {
   background-color: rgba(211, 0, 0, 0.28);
-  border: 2px solid  rgba(211, 0, 0, 0.51);
+  border: 2px dashed rgba(211, 0, 0, 0.51);
 }
