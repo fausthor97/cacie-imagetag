@@ -46,8 +46,8 @@ export class ImageCanvasComponent implements OnInit {
     this.image.setInitialDimensions(
       this.imgRef.nativeElement.naturalWidth,
       this.imgRef.nativeElement.naturalHeight,
-      this.imgRef.nativeElement.width,
-      this.imgRef.nativeElement.height,
+      this.imgRef.nativeElement.clientWidth,
+      this.imgRef.nativeElement.clientHeight,
     );
     $('.image-container').draggable();
     $('.image-container').draggable('disable');
@@ -85,9 +85,11 @@ export class ImageCanvasComponent implements OnInit {
 
   zoomIn() {
     this.imgContRef.nativeElement.style.width = (this.imgContRef.nativeElement.clientWidth + ZOOM_VALUE) + "px";
+    this.image.updateDisplayDimesions(this.imgRef.nativeElement.clientWidth, this.imgRef.nativeElement.clientHeight);
   }
 
   zoomOut() {
     this.imgContRef.nativeElement.style.width = (this.imgContRef.nativeElement.clientWidth - ZOOM_VALUE) + "px";
+    this.image.updateDisplayDimesions(this.imgRef.nativeElement.clientWidth, this.imgRef.nativeElement.clientHeight);
   }
 }

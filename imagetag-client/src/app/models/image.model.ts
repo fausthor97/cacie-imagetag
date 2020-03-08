@@ -47,8 +47,17 @@ export class Image {
         this.displayHeight = displayHeight;
     }
 
-    updateDisplayDimesions(displayWidth: number, displayHeight) {
-        // update markers points coordenates
+    updateDisplayDimesions(newWidth: number, newHeight: number) {
+        this.markers.forEach(marker => {
+            marker.translatePosition(
+                this.displayWidth,
+                this.displayHeight,
+                newWidth,
+                newHeight
+            );
+        });
+        this.displayWidth = newWidth;
+        this.displayHeight = newHeight;
     }
 
     deleteMarker(key) {

@@ -19,6 +19,15 @@ export class CircleMarker {
         this.calculateProperties();
     }
 
+    public translatePosition(currentWidth, currentHeight, newWidth, newHeight) {
+        console.log(currentWidth, currentHeight, newWidth, newHeight);
+        this.points.a.x = (this.points.a.x * newWidth) / currentWidth;
+        this.points.a.y = (this.points.a.y * newHeight) / currentHeight;
+        this.points.b.x = (this.points.b.x * newWidth) / currentWidth;
+        this.points.b.y = (this.points.b.y * newHeight) / currentHeight;
+        this.calculateProperties();
+    }
+
     public updatePoints(pointA: IPoint, pointB: IPoint) {
         this.points = { a: pointA, b: pointB };
         this.calculateProperties();
