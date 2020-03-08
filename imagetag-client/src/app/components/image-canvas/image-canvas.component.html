@@ -1,5 +1,14 @@
-<div #imageContainer class="image-container">
-  <img #imageTag id="image-tag" [src]="imageUrl" (load)="onImageLoaded()" (click)="onImageClicked($event)"/>
+<div #imageContainer class="image-container"
+  [ngClass]="{
+    'draggable-cursor': isDraggable,
+    'crosshair-cursor': !isDraggable }">
+
+  <img #imageTag id="image-tag"
+    [src]="imageUrl"
+    (load)="onImageLoaded()"
+    (click)="onImageClicked($event)"
+    oncontextmenu="return false;"/>
+
   <ng-container *ngFor="let marker of image?.markers">
     <div class="circle-marker" [ngStyle]="{
         'width.px': marker.diameter,
@@ -10,20 +19,13 @@
       [ngClass]="{'highlighted' : marker.highlighted}">
     </div>
   </ng-container>
+
 </div>
 
-<div *ngIf="imageHasLoaded && image.markers" id="data">
-  <button (click)="zoomIn()">zoom in</button>
-  <button (click)="zoomOut()">zoom out</button>
-  <button (click)="draggableToggle()">draggable: {{ this.isDraggable }}</button>
-  <ion-list>
-    <ion-item *ngFor="let marker of image.markers | keyvalue: noSort"
-      (mouseenter)="listMarkerMouseEnter(marker.key)"
-      (mouseleave)="listMarkerMouseLeave(marker.key)">
-      <ion-label>
-        {{marker.key}}: {{marker.value.points | json}}
-      </ion-label>
-      <ion-icon (click)="deleteMarker(marker.key)" slot="end" icon="trash" color="primary"></ion-icon>
-    </ion-item>
-  </ion-list>
-</div>
+<app-markers-data
+  *ngIf="imageHasLoaded && image.markers"
+  [markers]="image.markers"
+  (itemMouseEnter)="highlightMarker($event)"
+  (itemMouseLeave)="removeMarkerHighlight($event)"
+  (deleteMarker)="image.deleteMarker($event)">
+</app-markers-data>

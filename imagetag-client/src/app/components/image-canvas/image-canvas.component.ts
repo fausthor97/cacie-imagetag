@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { Image } from 'src/app/models/image.model';
+import { Observable } from 'rxjs';
 
 const ZOOM_VALUE = 250;
 
@@ -11,6 +12,7 @@ const ZOOM_VALUE = 250;
 
 export class ImageCanvasComponent implements OnInit {
   @Input() imageUrl;
+  @Input() buttonEvents: Observable<'zoomIn'|'zoomOut'>;
   @ViewChild('imageTag', { static: false }) imgRef: ElementRef<HTMLImageElement>;
   @ViewChild('imageContainer', { static: false }) imgContRef: ElementRef<HTMLImageElement>;
   public image: Image;
@@ -21,6 +23,23 @@ export class ImageCanvasComponent implements OnInit {
 
   ngOnInit() {
     this.image = new Image(this.imageUrl);
+    this.buttonEvents.subscribe(event => {
+      console.log(event);
+      if (event === 'zoomIn') {
+        this.zoomIn();
+      } else if (event === 'zoomOut') {
+        this.zoomOut();
+      }
+    });
+    document.querySelector('body').onkeydown = (evt: KeyboardEvent) => {
+      evt = evt || window.event as KeyboardEvent;
+      if ((<KeyboardEvent>event).keyCode == 17) {
+        this.enableImageDraggable();
+      }
+    };
+    document.querySelector('body').onkeyup = () => {
+      this.disableImageDraggable();
+    };
   }
 
   onImageLoaded() {
@@ -33,48 +52,42 @@ export class ImageCanvasComponent implements OnInit {
     $('.image-container').draggable();
     $('.image-container').draggable('disable');
     this.imageHasLoaded = true;
-    $('#data').draggable();
   }
 
-  onImageClicked(click) {
-    if (!this.isDraggable) {
-      this.image.onClick(click);
-    }
+  enableImageDraggable() {
+    this.isDraggable = true;
+    $('.image-container').draggable('enable');
   }
 
-  draggableToggle() {
+  disableImageDraggable() {
     if (this.isDraggable) {
-      $('.image-container').draggable('disable');
       this.isDraggable = false;
-    } else {
-      $('.image-container').draggable('enable');
-      this.isDraggable = true;
+      $('.image-container').draggable('disable');
     }
+  }
+
+  onImageClicked(e: PointerEvent) {
+    if (e.ctrlKey) {
+      this.isDraggable = true;
+      $('.image-container').draggable('enable');
+    } else if (!this.isDraggable) {
+      this.image.onClick(e);
+    }
+  }
+
+  highlightMarker(key: string) {
+    this.image.markers[Number(key)].highlighted = true;
+  }
+
+  removeMarkerHighlight(key: string) {
+    this.image.markers[Number(key)].highlighted = false;
   }
 
   zoomIn() {
     this.imgContRef.nativeElement.style.width = (this.imgContRef.nativeElement.clientWidth + ZOOM_VALUE) + "px";
-    // this.imgRef.nativeElement.style.width = (this.imgRef.nativeElement.clientWidth + ZOOM_VALUE) + "px";
   }
 
   zoomOut() {
     this.imgContRef.nativeElement.style.width = (this.imgContRef.nativeElement.clientWidth - ZOOM_VALUE) + "px";
-    // this.imgRef.nativeElement.style.width = (this.imgRef.nativeElement.clientWidth - ZOOM_VALUE) + "px";
-  }
-
-  deleteMarker(key) {
-    this.image.deleteMarker(key);
-  }
-
-  listMarkerMouseEnter(key: string) {
-    this.image.markers[Number(key)].highlighted = true;
-  }
-
-  listMarkerMouseLeave(key: string) {
-    this.image.markers[Number(key)].highlighted = false;
-  }
-
-  noSort() {
-    return 0;
   }
 }

@@ -8,6 +8,7 @@ import { FolderPageRoutingModule } from './folder-routing.module';
 
 import { FolderPage } from './folder.page';
 import { ImageCanvasComponent } from '../components/image-canvas/image-canvas.component';
+import { MarkersDataComponent } from '../components/markers-data/markers-data.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ImageCanvasComponent } from '../components/image-canvas/image-canvas.co
     FolderPage,
 
     // Components
-    ImageCanvasComponent
+    ImageCanvasComponent,
+    MarkersDataComponent
   ]
 })
 export class FolderPageModule {}

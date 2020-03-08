@@ -3,17 +3,25 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+    <ion-title>{{ imageName }}</ion-title>
+      <ion-buttons slot="end">
+        Zoom:&nbsp;
+        <ion-button (click)="buttonEvent.next('zoomOut')"><ion-icon name="remove" slot="icon-only"></ion-icon></ion-button>
+        <ion-button (click)="buttonEvent.next('zoomIn')"><ion-icon name="add" slot="icon-only"></ion-icon></ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+      <ion-title size="large">{{ imageName }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-image-canvas [imageUrl]="'assets/DSC_0280.JPG'"></app-image-canvas>
+  <app-image-canvas
+    [imageUrl]="'assets/' + imageName"
+    [buttonEvents]="buttonEvent.asObservable()">
+  </app-image-canvas>
 
 </ion-content>

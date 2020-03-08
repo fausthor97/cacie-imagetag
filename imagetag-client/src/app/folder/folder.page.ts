@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-folder',
@@ -7,12 +8,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
-  public folder: string;
+  public buttonEvent = new Subject<'zoomIn'|'zoomOut'>();
+  public imageName: string = 'DSC_0280.JPG';
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+    // this.imageName = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
 }
