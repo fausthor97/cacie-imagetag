@@ -2,6 +2,12 @@ ion-menu-button {
   color: var(--ion-color-primary);
 }
 
+ion-content {
+  --background: none;
+  background-image: url('../../assets/dot-grid.png');
+  overflow: hidden;
+}
+
 #container {
   text-align: center;
   position: absolute;
