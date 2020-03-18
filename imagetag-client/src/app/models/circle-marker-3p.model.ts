@@ -58,8 +58,6 @@ export class CircleMarker3p {
                 [pow(p3.x, 2) + pow(p3.y, 2) - (pow(p1.x, 2) + pow(p1.y, 2))]
             ])
         );
-        console.log(solution);
-        console.log(solution._data);
         return { x: solution._data[0], y: solution._data[1] };
     }
 
